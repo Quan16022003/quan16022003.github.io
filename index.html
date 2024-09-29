@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>profile web</title>
+    <style>
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 11pt;
+        }
+        .container {
+            width: 980px;
+            margin: 0 auto;
+        }
+        .profile-img {
+            width: 250px;
+        }
+        .name {
+            font-size: 24pt;
+            font-weight: bold;
+        }
+        .contact-info {
+            font-size: 14pt;
+        }
+        .links a {
+            margin-right: 10px;
+            text-decoration: none;
+        }
+        hr {
+            border: 0;
+            height: 2px;
+            background-color: black;
+        }
+        .bio {
+            font-size: 13pt;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <table width="100%">
+            <tr>
+                <td width="50%">
+                    <img class="profile-img" src="./files/my_pic.png" alt="Profile Picture">
+                </td>
+                <td valign="top">
+                    <p id="name" class="name"></p>
+                    <p id="contact-info" class="contact-info"></p>
+                    <div class="links">
+                        <a id="github" href="#">GitHub</a>
+                        <a id="scholar" href="#">Google Scholar</a>
+                        <a id="cv" href="#">Resume/CV</a>
+                        <a id="twitter" href="#">Twitter</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <p id="bio" class="bio"></p>
+    </div>
+
+    <script>
+        fetch('info.json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('name').textContent = data.name;
+            document.getElementById('contact-info').innerHTML = `
+                ${data.position}<br>
+                ${data.company}<br>
+                ${data.location}<br>
+                ${data.email}<br>
+            `;
+            document.getElementById('github').href = data.links.github;
+            document.getElementById('scholar').href = data.links.scholar;
+            document.getElementById('cv').href = data.links.cv;
+            document.getElementById('twitter').href = data.links.twitter;
+
+            document.getElementById('bio').textContent = data.bio;
+        });
+    </script>
+</body>
+</html>
